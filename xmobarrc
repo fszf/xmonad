@@ -47,6 +47,6 @@ Config { font = "xft:Migu 1M:size=13"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %StdinReader% }{ %multicpu%%memory%%wlan0%%wlan0wi%%battery%<fc=#aeae86>%date%</fc> "
+       , template = " %StdinReader% }{ %multicpu%%memory%%wlan0%%battery%<fc=#aeae86>%date%</fc> "
        }
 
