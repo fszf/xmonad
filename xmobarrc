@@ -16,7 +16,7 @@ Config { font = "xft:Migu 1M:size=13"
                                           , "--normal" , "#b0bdbd"
                                           , "--high"   , "#86ae86"
                                           ] 10
-                    , Run Wireless "wlan0" [ "-t" , "<essid> "
+                    , Run Wireless "wlan0" [ "-t" , "-<essid>- "
                                           , "-L"       , "40"
                                           , "-H"       , "200"
                                           , "-m"       , "3"
