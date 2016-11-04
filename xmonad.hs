@@ -267,11 +267,11 @@ myLayout = spacing gapwidth $ gaps [(U, gwU),(D, gwD),(L, gwL),(R, gwR)]
 -------------------------------------------------------------------------------
 
 myStartupHook = do
-        spawnOnce "gnome-settings-daemon"
-        spawnOnce "nm-applet"
-        spawnOnce "xscreensaver -no-splash"
-        spawnOnce "$HOME/.dropbox-dist/dropboxd"
-        spawnOnce "bash $HOME/.fehbg"
+        spawnOnce "nitrogen --restore"
+        --spawnOnce "nm-applet"
+        --spawnOnce "xscreensaver -no-splash"
+        --spawnOnce "$HOME/.dropbox-dist/dropboxd"
+        --spawnOnce "bash $HOME/.fehbg"
         -- spawnOnce "compton -b --config $HOME/.config/compton/compton.conf"
 
 --------------------------------------------------------------------------- }}}
@@ -291,19 +291,15 @@ myManageHookShift = composeAll
 myManageHookFloat = composeAll
     [ className =? "Gimp"             --> doFloat
     , className =? "Tk"               --> doFloat
-    , className =? "speedcrunch"      --> doFloat
-    , className =? "mplayer2"         --> doCenterFloat
+    , title     =? "SpeedCrunch"      --> doSideFloat SE
     , className =? "mpv"              --> doCenterFloat
     , className =? "feh"              --> doCenterFloat
-    , className =? "Display.im6"      --> doCenterFloat
-    , className =? "Shutter"          --> doCenterFloat
+    , className =? "Sxiv"             --> doCenterFloat
     , className =? "Thunar"           --> doCenterFloat
     , className =? "Nautilus"         --> doCenterFloat
     , className =? "Plugin-container" --> doCenterFloat
     , className =? "Screenkey"        --> (doRectFloat $ W.RationalRect 0.7 0.9 0.3 0.1)
     , className =? "Websearch"        --> doCenterFloat
-    , className =? "XClock"           --> doSideFloat NE
-    , title     =? "Speedbar"         --> doCenterFloat
     , title     =? "urxvt_float"      --> doSideFloat SC
     , isFullscreen                    --> doFullFloat
     , isDialog                        --> doCenterFloat
