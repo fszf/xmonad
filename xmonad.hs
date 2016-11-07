@@ -101,7 +101,7 @@ main = do
        , normalBorderColor  = mynormalBorderColor
        , focusedBorderColor = myfocusedBorderColor
        , startupHook        = myStartupHook
-       , manageHook         = myManageHookShift <+>
+	   , manageHook         = myManageHookShift <+>
                               myManageHookFloat <+>
                               manageDocks
        , layoutHook         = avoidStruts $ ( toggleLayouts (noBorders Full)
@@ -115,8 +115,9 @@ main = do
        , workspaces         = myWorkspaces
        , modMask            = modm
        , mouseBindings      = newMouse
-       }
 
+	   }	
+		
        -------------------------------------------------------------------- }}}
        -- Define keys to remove                                             {{{
        ------------------------------------------------------------------------
@@ -215,7 +216,7 @@ main = do
        `additionalKeysP`
        [
        -- Launch network manager client
-         ("M-w", spawn "nmcli_dmenu")
+         ("M-w", spawn "sudo connman_dmenu")
        -- Launch calculator)
        , ("C-<Tab>", spawn "speedcrunch")
        -- Launch terminal
@@ -295,7 +296,7 @@ myManageHookFloat = composeAll
     , className =? "mpv"              --> doCenterFloat
     , className =? "feh"              --> doCenterFloat
     , className =? "Sxiv"             --> doCenterFloat
-    , className =? "Thunar"           --> doCenterFloat
+    --, className =? "Thunar"           --> doCenterFloat
     , className =? "Nautilus"         --> doCenterFloat
     , className =? "Plugin-container" --> doCenterFloat
     , className =? "Screenkey"        --> (doRectFloat $ W.RationalRect 0.7 0.9 0.3 0.1)
