@@ -42,6 +42,8 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing           -- this makes smart space around windows
 import XMonad.Layout.ToggleLayouts     -- Full window at any time
 import XMonad.Layout.TwoPane
+import XMonad.Layout.Renamed
+import XMonad.Layout.ThreeColumns
 
 import XMonad.Prompt
 import XMonad.Prompt.Window            -- pops up a prompt with window names
@@ -216,7 +218,7 @@ main = do
        `additionalKeysP`
        [
        -- Launch network manager client
-         ("M-w", spawn "sudo connman_dmenu")
+         ("M-w", spawn "nmcli_dmenu")
        -- Launch calculator)
        , ("C-<Tab>", spawn "speedcrunch")
        -- Launch terminal
@@ -227,21 +229,22 @@ main = do
        , ("M-S-w", spawn "qutebrowser --backend webengine")
        -- Launch dmenu for launching applicatiton
        , ("M-p", spawn "$HOME/src/scripts/emenu_run")
+       , ("M-r", spawn "$HOME/src/scripts/emenu_run")
        -- Lauch websearch application (See https://github.com/ssh0/web_search)
        , ("M1-C-f", spawn "websearch")
        -- Play / Pause media keys
-       , ("<XF86AudioPlay>"  , spawn "ncmpcpp toggle")
-       , ("<XF86HomePage>"   , spawn "ncmpcpp toggle")
-       , ("S-<F6>"           , spawn "ncmpcpp toggle")
-       , ("S-<XF86AudioPlay>", spawn "streamradio pause")
-       , ("S-<XF86HomePage>" , spawn "streamradio pause")
+       --, ("<XF86AudioPlay>"  , spawn "ncmpcpp toggle")
+       --, ("<XF86HomePage>"   , spawn "ncmpcpp toggle")
+       --, ("S-<F6>"           , spawn "ncmpcpp toggle")
+       --, ("S-<XF86AudioPlay>", spawn "streamradio pause")
+       --, ("S-<XF86HomePage>" , spawn "streamradio pause")
        -- Volume setting media keys
-       , ("<XF86AudioRaiseVolume>", spawn "sound_volume_change_wrapper.sh +")
-       , ("<XF86AudioLowerVolume>", spawn "sound_volume_change_wrapper.sh -")
-       , ("<XF86AudioMute>"       , spawn "sound_volume_change_wrapper.sh m")
+       --, ("<XF86AudioRaiseVolume>", spawn "sound_volume_change_wrapper.sh +")
+       --, ("<XF86AudioLowerVolume>", spawn "sound_volume_change_wrapper.sh -")
+       --, ("<XF86AudioMute>"       , spawn "sound_volume_change_wrapper.sh m")
         -- Brightness Keys
-       , ("<XF86MonBrightnessUp>"  , spawn "xbacklight + 5 -time 100 -steps 1")
-       , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5 -time 100 -steps 1")
+       --, ("<XF86MonBrightnessUp>"  , spawn "xbacklight + 5 -time 100 -steps 1")
+       --, ("<XF86MonBrightnessDown>", spawn "xbacklight - 5 -time 100 -steps 1")
        -- Take a screenshot (whole window)
        , ("<Print>", spawn "screenshot.sh")
        -- Take a screenshot (selected area)
@@ -258,11 +261,21 @@ main = do
 -- myLayout:          Handle Window behaveior                               {{{
 -------------------------------------------------------------------------------
 
-myLayout = spacing gapwidth $ gaps [(U, gwU),(D, gwD),(L, gwL),(R, gwR)]
-           $ (ResizableTall 1 (1/204) (119/204) [])
-             ||| (TwoPane (1/204) (119/204))
-             ||| Simplest
+--myLayout = spacing gapwidth $ gaps [(U, gwU),(D, gwD),(L, gwL),(R, gwR)]
+--           $ (ResizableTall 1 (1/204) (119/204) [])
+--             ||| (TwoPane (1/204) (119/204))
+--             ||| Simplest
 
+myLayout =  tiled ||| mtiled ||| full ||| threecol
+	where
+    nmaster  = 1     -- Default number of windows in master pane
+    delta    = 2/100 -- Percentage of the screen to increment when resizing
+    ratio    = 5/8   -- Defaul proportion of the screen taken up by main pane
+    rt       = spacing 5 $ ResizableTall nmaster delta ratio []
+    tiled    = renamed [Replace "Ti"] $ smartBorders rt
+    mtiled   = renamed [Replace "mTi"] $ smartBorders $ Mirror rt
+    full     = renamed [Replace "M"] $ noBorders Full
+    threecol = renamed [Replace "3c"] $ ThreeColMid 1 (3/100) (1/2) 
 --------------------------------------------------------------------------- }}}
 -- myStartupHook:     Start up applications                                 {{{
 -------------------------------------------------------------------------------
@@ -322,7 +335,7 @@ myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
 
 myWsBar = "xmobar $HOME/.xmonad/xmobarrc"
 
-wsPP = xmobarPP { ppOrder           = \(ws:l:t:_)  -> [ws,t]
+wsPP = xmobarPP { ppOrder           = \(ws:l:t:_)  -> [ws,l,t]
                 , ppCurrent         = xmobarColor colorRed     colorNormalbg . \s -> "●"
                 , ppUrgent          = xmobarColor colorGray    colorNormalbg . \s -> "●"
                 , ppVisible         = xmobarColor colorRed     colorNormalbg . \s -> "⦿"
