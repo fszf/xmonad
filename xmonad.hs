@@ -44,6 +44,7 @@ import XMonad.Layout.ToggleLayouts     -- Full window at any time
 import XMonad.Layout.TwoPane
 import XMonad.Layout.Renamed
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Grid
 
 import XMonad.Prompt
 import XMonad.Prompt.Window            -- pops up a prompt with window names
@@ -98,7 +99,7 @@ main = do
     wsbar <- spawnPipe myWsBar
     xmonad $ ewmh defaultConfig
        { borderWidth        = borderwidth
-       , terminal           = "termite"
+       , terminal           = "st"
        , focusFollowsMouse  = True
        , normalBorderColor  = mynormalBorderColor
        , focusedBorderColor = myfocusedBorderColor
@@ -112,7 +113,7 @@ main = do
                                             )
         -- xmobar setting
        , logHook            = myLogHook wsbar 
-                            >> updatePointer (0.5,0.5) (1,1) 
+                            >> updatePointer (0.5,0.5) (0,0) 
        , handleEventHook    = fullscreenEventHook <+> docksEventHook
        , workspaces         = myWorkspaces
        , modMask            = modm
@@ -222,7 +223,7 @@ main = do
        -- Launch calculator)
        , ("C-<Tab>", spawn "speedcrunch")
        -- Launch terminal
-       , ("M-S-<Return>", spawn "termite")
+       , ("M-S-<Return>", spawn "st")
        -- Launch file manager
        , ("M-S-f", spawn "thunar")
        -- Launch web browser
@@ -230,8 +231,8 @@ main = do
        -- Launch dmenu for launching applicatiton
        , ("M-p", spawn "$HOME/src/scripts/emenu_run")
        , ("M-r", spawn "$HOME/src/scripts/emenu_run")
-       -- Lauch websearch application (See https://github.com/ssh0/web_search)
-       , ("M1-C-f", spawn "websearch")
+       -- Launch passmenu (pass via dmenu) 
+       , ("M-x", spawn "passmenu")
        -- Play / Pause media keys
        --, ("<XF86AudioPlay>"  , spawn "ncmpcpp toggle")
        --, ("<XF86HomePage>"   , spawn "ncmpcpp toggle")
@@ -266,16 +267,17 @@ main = do
 --             ||| (TwoPane (1/204) (119/204))
 --             ||| Simplest
 
-myLayout =  tiled ||| mtiled ||| full ||| threecol
+myLayout =  tiled ||| mtiled ||| full ||| threecol ||| grid
 	where
     nmaster  = 1     -- Default number of windows in master pane
     delta    = 2/100 -- Percentage of the screen to increment when resizing
     ratio    = 5/8   -- Defaul proportion of the screen taken up by main pane
     rt       = spacing 5 $ ResizableTall nmaster delta ratio []
-    tiled    = renamed [Replace "Ti"] $ smartBorders rt
-    mtiled   = renamed [Replace "mTi"] $ smartBorders $ Mirror rt
+    tiled    = renamed [Replace "T"] $ smartBorders rt
+    mtiled   = renamed [Replace "Bs"] $ smartBorders $ Mirror rt
     full     = renamed [Replace "M"] $ noBorders Full
-    threecol = renamed [Replace "3c"] $ ThreeColMid 1 (3/100) (1/2) 
+    threecol = renamed [Replace "3c"] $ ThreeColMid 1 (3/100) (1/2)
+    grid     = renamed [Replace "G"] $ GridRatio (3/3)
 --------------------------------------------------------------------------- }}}
 -- myStartupHook:     Start up applications                                 {{{
 -------------------------------------------------------------------------------
