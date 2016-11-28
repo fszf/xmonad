@@ -68,8 +68,8 @@ colorGreen     = "#00d700"
 colorRed       = "#ff005f"
 colorGray      = "#666666"
 colorWhite     = "#bdbdbd"
-colorNormalbg  = "#1c1c1c"
-colorfg        = "#a8b6b8"
+colorNormalbg  = "#282828"--"#1c1c1c"
+colorfg        = "#ebdbb2"--"#a8b6b8"
 
 -- Border width
 borderwidth = 0
@@ -225,7 +225,7 @@ main = do
        -- Launch terminal
        , ("M-S-<Return>", spawn "st")
        -- Launch file manager
-       , ("M-S-f", spawn "thunar")
+       , ("M-S-f", spawn "pcmanfm")
        -- Launch web browser
        , ("M-S-w", spawn "qutebrowser --backend webengine")
        -- Launch dmenu for launching applicatiton
