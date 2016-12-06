@@ -68,8 +68,8 @@ colorGreen     = "#00d700"
 colorRed       = "#ff005f"
 colorGray      = "#666666"
 colorWhite     = "#bdbdbd"
-colorNormalbg  = "#282828"--"#1c1c1c"
-colorfg        = "#ebdbb2"--"#a8b6b8"
+colorNormalbg  = "#1c1c1c"
+colorfg        = "#a8b6b8"
 
 -- Border width
 borderwidth = 0
@@ -149,7 +149,9 @@ main = do
        , ("M-S-c"    , kill1)
        -- Toggle layout (Fullscreen mode)
        , ("M-f"    , sendMessage ToggleLayout)
-       , ("M-S-f"  , withFocused (keysMoveWindow (-borderwidth,-borderwidth)))
+       --, ("M-S-f"  , withFocused (keysMoveWindow (-borderwidth,-borderwidth)))
+       -- toggle layout (simplest float)
+       , ("M-u"    , sendMessage (Toggle "Simplest"))
        -- Move the focused window
        , ("M-C-<R>", withFocused (keysMoveWindow (moveWD, 0)))
        , ("M-C-<L>", withFocused (keysMoveWindow (-moveWD, 0)))
@@ -256,6 +258,8 @@ main = do
        , ("C-<Escape>", spawn "touchpad_toggle.sh")
        -- Toggle trackpoint (Lenovo PC)
        , ("M1-<Escape>", spawn "trackpoint_toggle.sh")
+       -- Toggle Calendar
+       , ("M-c", spawn "gsimplecal")
        ]
 
 --------------------------------------------------------------------------- }}}

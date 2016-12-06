@@ -1,7 +1,7 @@
 -- vim: ft=haskell
 Config { font = "xft:Migu 1M:size=13"
-       , bgColor = "#282828" --"#1c1c1c"
-       , fgColor = "#ebdbb2"--"#737373"
+       , bgColor = "#1d1f21" --"#1c1c1c"
+       , fgColor = "#737373"
        , position = Top
        --, position = TopSize C 100 35 -- use this if only using one monitor
        --, position = Static { xpos = 0 , ypos = 0, width = 1920, height = 24 } --manually position bar to display on left monitor 
