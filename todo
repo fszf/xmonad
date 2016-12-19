@@ -1,0 +1,4 @@
+Look into nesting Combo (or ComboP) to wire three ResizeableTall layouts together
+and probably WindowNavigation over all of them to make moving things between columns easier.
+
+

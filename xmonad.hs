@@ -24,6 +24,7 @@ import qualified XMonad.Actions.FlexibleResize as Flex -- flexible resize
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.UpdatePointer
 import XMonad.Actions.WindowGo
+import XMonad.Actions.DwmPromote       -- zoom swap dwm style
 
 import XMonad.Hooks.DynamicLog         -- for xmobar
 import XMonad.Hooks.EwmhDesktops
@@ -220,8 +221,10 @@ main = do
 
        `additionalKeysP`
        [
+       -- Zoomswap dwm like
+         ("M-<Return>", dwmpromote) 
        -- Launch network manager client
-         ("M-w", spawn "nmcli_dmenu")
+       , ("M-w", spawn "nmcli_dmenu")
        -- Launch calculator)
        , ("C-<Tab>", spawn "speedcrunch")
        -- Launch terminal
