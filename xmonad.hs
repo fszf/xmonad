@@ -63,21 +63,32 @@ import Graphics.X11.ExtraTypes.XF86
 myWorkspaces = ["1", "2", "3", "4", "5"]
 modm = mod4Mask
 
--- Color Setting
-colorBlue      = "#868bae"
-colorGreen     = "#00d700"
-colorRed       = "#ff005f"
-colorGray      = "#666666"
-colorWhite     = "#bdbdbd"
-colorNormalbg  = "#1c1c1c"
-colorfg        = "#a8b6b8"
+-- Original Color Setting
+--colorBlue      = "#868bae"
+--colorGreen     = "#00d700"
+--colorRed       = "#ff005f"
+--colorGray      = "#666666"
+--colorWhite     = "#bdbdbd"
+--colorNormalbg  = "#1c1c1c"
+--colorfg        = "#a8b6b8"
+
+-- Soft Color Setting
+colorBlue       = "#477ab3"
+colorGreen      = "#52ad91"
+colorRed        = "#52ad91"
+colorGray       = "#4d4d4d"
+colorWhite      = "#ffffff"
+colorNormalbg   = "#1b1b1b"
+colorfg         = "#ffffff"
+
 
 -- Border width
 borderwidth = 0
 
 -- Border color
 mynormalBorderColor  = "#333333"
-myfocusedBorderColor = "#585858"
+--myfocusedBorderColor = "#585858"
+myfocusedBorderColor = "#cca8c9"
 
 -- Float window control width
 moveWD = borderwidth
@@ -100,7 +111,7 @@ main = do
     wsbar <- spawnPipe myWsBar
     xmonad $ ewmh defaultConfig
        { borderWidth        = borderwidth
-       , terminal           = "st"
+       , terminal           = "termite"
        , focusFollowsMouse  = True
        , normalBorderColor  = mynormalBorderColor
        , focusedBorderColor = myfocusedBorderColor
@@ -224,20 +235,22 @@ main = do
        -- Zoomswap dwm like
          ("M-<Return>", dwmpromote) 
        -- Launch network manager client
-       , ("M-w", spawn "nmcli_dmenu")
+       , ("M-w", spawn "networkmanager_dmenu")
        -- Launch calculator)
        , ("C-<Tab>", spawn "speedcrunch")
        -- Launch terminal
-       , ("M-S-<Return>", spawn "st")
+       , ("M-S-<Return>", spawn "termite")
        -- Launch file manager
        , ("M-S-f", spawn "pcmanfm")
        -- Launch web browser
-       , ("M-S-w", spawn "qutebrowser --backend webengine")
+       , ("M-S-w", spawn "/home/fshin/src/scripts/qute")
        -- Launch dmenu for launching applicatiton
        , ("M-p", spawn "$HOME/src/scripts/emenu_run")
        , ("M-r", spawn "$HOME/src/scripts/emenu_run")
        -- Launch passmenu (pass via dmenu) 
        , ("M-x", spawn "passmenu")
+       -- Toggle workspace
+       , ("M-<Tab>", toggleWS)
        -- Play / Pause media keys
        --, ("<XF86AudioPlay>"  , spawn "ncmpcpp toggle")
        --, ("<XF86HomePage>"   , spawn "ncmpcpp toggle")
@@ -380,4 +393,6 @@ myMouse x = [ ((modm, button3), (\w -> focus w >> Flex.mouseResizeWindow w)) ]
 newMouse x = M.union (mouseBindings defaultConfig x) (M.fromList (myMouse x))
 
 --------------------------------------------------------------------------- }}}
+
+
 -- vim: ft=haskell

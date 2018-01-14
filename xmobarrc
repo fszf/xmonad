@@ -1,6 +1,6 @@
 -- vim: ft=haskell
-Config { font = "xft:Migu 1M:size=13"
-       , bgColor = "#1d1f21" --"#1c1c1c"
+Config { font = "xft:Migu 1M:size=10"
+       , bgColor = "#1b1b1b" --"#1d1f21" --"#1c1c1c"
        , fgColor = "#737373"
        , position = Top
        --, position = TopSize C 100 35 -- use this if only using one monitor
@@ -10,14 +10,14 @@ Config { font = "xft:Migu 1M:size=13"
        , overrideRedirect = False
        , border = BottomBM 0
        , borderColor = "#4e4e4e"
-       , commands = [ Run Network "wlan0" [ "-t"       , "⇩<rx>  ⇧<tx>  "
+       , commands = [ Run Network "wlp58s0" [ "-t"       , "⇩<rx>  ⇧<tx>  "
                                           , "-L"       , "40"
                                           , "-H"       , "200"
                                           , "-m"       , "3"
                                           , "--normal" , "#b0bdbd"
                                           , "--high"   , "#86ae86"
                                           ] 10
-                    , Run Wireless "wlan0" [ "-t" , "-<essid>- "
+                    , Run Wireless "wlp58s0" [ "-t" , "-<essid>- "
                                           , "-L"       , "40"
                                           , "-H"       , "200"
                                           , "-m"       , "3"
@@ -62,6 +62,6 @@ Config { font = "xft:Migu 1M:size=13"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %StdinReader% }{ %multicpu%%coretemp%%memory%%wlan0%%wlan0wi%%battery%<fc=#aeae86>%date%</fc> "
+       , template = " %StdinReader% }{ %multicpu%%coretemp%%memory%%wlp58s0%%wlp58s0wi%%battery%<fc=#52ad91>%date%</fc> "
        }
 
